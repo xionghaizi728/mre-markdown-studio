@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MRE · Markdown 写作台</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">M</span>
+    <div class="brand-text">
+      <strong>MRE 写作台</strong>
+      <small>Markdown 读写 · 本地文件</small>
+    </div>
+  </div>
+  <div class="doc-head">
+    <span class="doc-path" id="docPath">未选择文档</span>
+    <span class="dirty-dot" id="dirtyDot" title="有未保存的修改" hidden></span>
+  </div>
+  <div class="actions">
+    <div class="view-switch" role="group" aria-label="视图切换">
+      <button type="button" data-view="edit">编辑</button>
+      <button type="button" data-view="split" class="active">分栏</button>
+      <button type="button" data-view="preview">预览</button>
+    </div>
+    <label class="autosave"><input type="checkbox" id="autosave" /><span>自动保存</span></label>
+    <button type="button" class="btn primary" id="saveBtn" disabled>保存</button>
+  </div>
+</header>
+
+<aside class="sidebar">
+  <div class="sidebar-head">
+    <input type="search" id="search" class="search" placeholder="搜索文件名…" autocomplete="off" />
+    <button type="button" class="btn icon" id="newBtn" title="新建文档（Ctrl + N）">＋</button>
+  </div>
+  <ul class="file-list" id="fileList"></ul>
+  <div class="sidebar-foot">
+    <span id="fileCount">0 个文档</span>
+    <span id="docsDir" class="docs-dir"></span>
+  </div>
+</aside>
+
+<main class="workspace" id="workspace">
+  <section class="pane pane-editor" id="paneEditor">
+    <div class="pane-head">
+      <span class="pane-title">编辑</span>
+      <div class="md-tools">
+        <button type="button" data-wrap="bold" title="加粗 Ctrl+B"><b>B</b></button>
+        <button type="button" data-wrap="italic" title="斜体 Ctrl+I"><i>I</i></button>
+        <button type="button" data-wrap="heading" title="标题">H</button>
+        <button type="button" data-wrap="link" title="链接">↗</button>
+        <button type="button" data-wrap="code" title="行内代码">&lt;/&gt;</button>
+        <button type="button" data-wrap="list" title="列表">≡</button>
+        <button type="button" data-wrap="quote" title="引用">❞</button>
+        <button type="button" data-wrap="table" title="插入表格">▦</button>
+      </div>
+    </div>
+    <textarea id="editor" class="editor" spellcheck="false" placeholder="从左侧选择文档，或按 Ctrl + N 新建一篇。"></textarea>
+  </section>
+
+  <div class="divider" id="divider"></div>
+
+  <section class="pane pane-preview" id="panePreview">
+    <div class="pane-head">
+      <span class="pane-title">预览</span>
+      <span class="stat" id="readTime"></span>
+    </div>
+    <article class="preview" id="preview"></article>
+  </section>
+</main>
+
+<footer class="statusbar">
+  <span id="statusLeft">就绪</span>
+  <span class="status-right">
+    <span id="cursorStat">行 1，列 1</span>
+    <span class="sep"></span>
+    <span id="charStat">0 字符</span>
+    <span class="sep"></span>
+    <span id="saveStat">未修改</span>
+  </span>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <h2 id="modalTitle">新建文档</h2>
+    <p class="modal-tip" id="modalTip">路径相对 docs 目录，例如「笔记/周报.md」</p>
+    <input type="text" id="modalInput" class="modal-input" spellcheck="false" />
+    <div class="modal-actions">
+      <button type="button" class="btn" id="modalCancel">取消</button>
+      <button type="button" class="btn primary" id="modalOk">确定</button>
+    </div>
+  </div>
+</div>
+
+<script src="/vendor/marked.min.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
